@@ -4,8 +4,6 @@ import io.zipcoder.domain.Customer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.ws.Response;
-
 /**
  * project: zcwbank
  * package: io.zipcoder.controller

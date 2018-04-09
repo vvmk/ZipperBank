@@ -33,7 +33,7 @@ public class AccountController {
         return null;
     }
 
-    public ResponseEntity deleteAccount(Long id) {
+    public ResponseEntity deleteAccountById(Long id) {
         return null;
     }
 }
