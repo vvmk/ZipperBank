@@ -1,4 +1,4 @@
-package io.zipcoder.service;
+package io.zipcoder.service.implementations;
 
 import io.zipcoder.domain.Account;
 import io.zipcoder.service.interfaces.AccountService;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
+
     public ResponseEntity<Iterable<Account>> getAllAccounts() {
         return null;
     }
