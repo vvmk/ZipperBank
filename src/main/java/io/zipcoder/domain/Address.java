@@ -1,6 +1,8 @@
 package io.zipcoder.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * project: zcwbank
@@ -10,7 +12,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Address {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String street_number;
     private String street_name;
     private String city;

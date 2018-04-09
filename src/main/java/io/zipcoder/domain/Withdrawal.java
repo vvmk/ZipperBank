@@ -1,6 +1,8 @@
 package io.zipcoder.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * project: zcwbank
@@ -11,7 +13,10 @@ import javax.persistence.Entity;
 
 @Entity
 public class Withdrawal {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String type;
     private String transaction_date;
     private String status;

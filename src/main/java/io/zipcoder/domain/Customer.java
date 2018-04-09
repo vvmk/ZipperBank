@@ -1,6 +1,6 @@
 package io.zipcoder.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * project: zcwbank
@@ -11,9 +11,15 @@ import javax.persistence.Entity;
 
 @Entity
 public class Customer {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String first_name;
     private String last_name;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
     private Address address;
 
     public Long getId() {
