@@ -1,6 +1,7 @@
 package io.zipcoder.service;
 
 import io.zipcoder.domain.Account;
+import io.zipcoder.service.interfaces.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

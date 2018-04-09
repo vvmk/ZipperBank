@@ -1,7 +1,7 @@
 package io.zipcoder.controller;
 
 import io.zipcoder.domain.Account;
-import io.zipcoder.service.AccountService;
+import io.zipcoder.service.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

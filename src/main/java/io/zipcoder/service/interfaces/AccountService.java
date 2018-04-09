@@ -1,4 +1,4 @@
-package io.zipcoder.service;
+package io.zipcoder.service.interfaces;
 
 import io.zipcoder.domain.Account;
 import org.springframework.http.ResponseEntity;
