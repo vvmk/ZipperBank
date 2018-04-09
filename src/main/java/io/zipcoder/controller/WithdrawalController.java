@@ -2,7 +2,12 @@ package io.zipcoder.controller;
 
 import io.zipcoder.domain.Withdrawal;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * project: zcwbank
@@ -13,23 +18,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WithdrawalController {
 
-    public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(Long accountId) {
+    @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = GET)
+    public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(@PathVariable Long accountId) {
         return null;
     }
 
-    public ResponseEntity<Withdrawal> getWithdrawalById(Long id) {
+    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = GET)
+    public ResponseEntity<Withdrawal> getWithdrawalById(@PathVariable Long withdrawalId) {
         return null;
     }
 
-    public ResponseEntity<Withdrawal> createWithdrawal(Withdrawal withdrawal) {
+    @RequestMapping(value = "/accounts/{accountId}/withdrawal", method = POST)
+    public ResponseEntity<Withdrawal> createWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long accountId) {
         return null;
     }
 
+    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = PUT)
     public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal) {
         return null;
     }
 
-    public ResponseEntity deleteWithdrawalById(Long id) {
+    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = DELETE)
+    public ResponseEntity deleteWithdrawalById(@PathVariable Long withdrawalId) {
         return null;
     }
 }
