@@ -2,7 +2,12 @@ package io.zipcoder.controller;
 
 import io.zipcoder.domain.Customer;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * project: zcwbank
@@ -14,23 +19,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerController {
 
-    public ResponseEntity<Customer> getCustomerByAccountId(Long accountId) {
+    @RequestMapping(value = "/accounts/{accountId}/customer", method = GET)
+    public ResponseEntity<Customer> getCustomerByAccountId(@PathVariable Long accountId) {
         return null;
     }
 
+    @RequestMapping(value = "/customers", method = GET)
     public ResponseEntity<Iterable<Customer>> getAllCustomers() {
         return null;
     }
 
-    public ResponseEntity<Customer> getCustomerById(Long id) {
+    @RequestMapping(value = "/customers/{customerId}", method = GET)
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerId) {
         return null;
     }
 
-    public ResponseEntity<Customer> createCustomer(Customer customer) {
+    @RequestMapping(value = "/customers", method = POST)
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         return null;
     }
 
-    public ResponseEntity<Customer> updateCustomer(Customer customer) {
+    @RequestMapping(value = "/customers/{customerId}", method = PUT)
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable Long customerId) {
         return null;
     }
 }
