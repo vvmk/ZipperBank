@@ -2,7 +2,12 @@ package io.zipcoder.controller;
 
 import io.zipcoder.domain.Bill;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * project: zcwbank
@@ -13,27 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BillController {
 
-    public ResponseEntity<Iterable<Bill>> getBillsByAccountId(Long accountId) {
+    @RequestMapping(value = "/accounts/{accountId}/bills", method = GET)
+    public ResponseEntity<Iterable<Bill>> getBillsByAccountId(@PathVariable Long accountId) {
         return null;
     }
 
-    public ResponseEntity<Bill> getBillById(Long id) {
+    @RequestMapping(value = "/bills/{billId}", method = GET)
+    public ResponseEntity<Bill> getBillById(@PathVariable Long id) {
         return null;
     }
 
-    public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(Long customerId) {
+    @RequestMapping(value = "/customers/{customerId}/bills", method = GET)
+    public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(@PathVariable Long customerId) {
         return null;
     }
 
-    public ResponseEntity<Bill> createBill(Bill bill) {
+    @RequestMapping(value = "/accounts/{accountId}/bills", method = POST)
+    public ResponseEntity<Bill> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
         return null;
     }
 
-    public ResponseEntity<Bill> updateBill(Bill bill) {
+    @RequestMapping(value = "/bills/{billId}", method = PUT)
+    public ResponseEntity<Bill> updateBill(@RequestBody Bill bill, @PathVariable Long billId) {
         return null;
     }
 
-    public ResponseEntity deleteBillById(Long id) {
+    @RequestMapping(value = "/bills/{billId}", method = DELETE)
+    public ResponseEntity deleteBillById(@PathVariable Long billId) {
         return null;
     }
 }
