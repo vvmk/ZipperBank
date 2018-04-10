@@ -1,6 +1,7 @@
 package io.zipcoder.controller;
 
 import io.zipcoder.domain.Bill;
+import io.zipcoder.service.interfaces.BillService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,33 +19,39 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 public class BillController {
 
+    private BillService billService;
+
+    public BillController(BillService billService) {
+        this.billService = billService;
+    }
+
     @RequestMapping(value = "/accounts/{accountId}/bills", method = GET)
     public ResponseEntity<Iterable<Bill>> getBillsByAccountId(@PathVariable Long accountId) {
-        return null;
+        return billService.getBillsByAccountId(accountId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = GET)
     public ResponseEntity<Bill> getBillById(@PathVariable Long id) {
-        return null;
+        return billService.getBillById(id);
     }
 
     @RequestMapping(value = "/customers/{customerId}/bills", method = GET)
     public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(@PathVariable Long customerId) {
-        return null;
+        return billService.getBillsByCustomerId(customerId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = POST)
     public ResponseEntity<Bill> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
-        return null;
+        return billService.createBill(bill, accountId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = PUT)
     public ResponseEntity<Bill> updateBill(@RequestBody Bill bill, @PathVariable Long billId) {
-        return null;
+        return billService.updateBill(bill, billId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = DELETE)
     public ResponseEntity deleteBillById(@PathVariable Long billId) {
-        return null;
+        return billService.deleteBillById(billId);
     }
 }

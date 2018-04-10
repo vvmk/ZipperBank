@@ -19,10 +19,12 @@ public class Account {
     private String nickname;
     private Integer rewards;
     private Double balance;
-
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Customer customer;
+
+    public Account() {
+    }
 
     public Long getId() {
         return id;

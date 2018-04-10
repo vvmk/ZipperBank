@@ -22,6 +22,9 @@ public class Customer {
     @JoinColumn(name = "customer_id")
     private Address address;
 
+    public Customer() {
+    }
+
     public Long getId() {
         return id;
     }

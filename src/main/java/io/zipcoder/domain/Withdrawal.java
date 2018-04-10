@@ -25,6 +25,9 @@ public class Withdrawal {
     private Double amount;
     private String description;
 
+    public Withdrawal() {
+    }
+
     public Long getId() {
         return id;
     }

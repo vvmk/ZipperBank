@@ -24,6 +24,9 @@ public class Deposit {
     private Double amount;
     private String description;
 
+    public Deposit() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -19,40 +19,40 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  */
 @RestController
 public class AccountController {
-    private AccountService acctService;
+    private AccountService accountService;
 
     @Autowired
     public AccountController(AccountService accountService) {
-        this.acctService = accountService;
+        this.accountService = accountService;
     }
 
     @RequestMapping(value = "/accounts", method = GET)
     public ResponseEntity<Iterable<Account>> getAllAccounts() {
-        return acctService.getAllAccounts();
+        return accountService.getAllAccounts();
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = GET)
     public ResponseEntity<Account> getAccountById(@PathVariable Long accountId) {
-        return null;
+        return accountService.getAccountById(accountId);
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = GET)
     public ResponseEntity<Iterable<Account>> getAccountsByCustomerId(@PathVariable Long customerId) {
-        return null;
+        return accountService.getAccountsByCustomerId(customerId);
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = POST)
     public ResponseEntity<Account> createAccount(@RequestBody Account account, @PathVariable Long customerId) {
-        return null;
+        return accountService.createAccount(account, customerId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = PUT)
     public ResponseEntity<Account> updateAccount(@RequestBody Account account, @PathVariable Long accountId) {
-        return null;
+        return accountService.updateAccount(account, accountId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = DELETE)
     public ResponseEntity deleteAccountById(@PathVariable Long accountId) {
-        return null;
+        return accountService.deleteAccountById(accountId);
     }
 }

@@ -1,6 +1,7 @@
 package io.zipcoder.controller;
 
 import io.zipcoder.domain.Deposit;
+import io.zipcoder.service.interfaces.DepositService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,28 +19,34 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 public class DepositController {
 
+    private DepositService depositService;
+
+    public DepositController(DepositService depositService) {
+        this.depositService = depositService;
+    }
+
     @RequestMapping(value = "/accounts/{accountId}/deposits", method = GET)
     public ResponseEntity<Iterable<Deposit>> getAllDepositsByAccountId(@PathVariable Long accountId) {
-        return null;
+        return depositService.getAllDepositsByAccountId(accountId);
     }
 
     @RequestMapping(value = "/deposits/{depositId}", method = GET)
     public ResponseEntity<Deposit> getDepositById(@PathVariable Long depositId) {
-        return null;
+        return depositService.getDepositById(depositId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/deposits", method = POST)
     public ResponseEntity<Deposit> createDeposit(@RequestBody Deposit deposit, @PathVariable Long accountId) {
-        return null;
+        return depositService.createDeposit(deposit, accountId);
     }
 
     @RequestMapping(value = "/deposits/{depositId}", method = PUT)
     public ResponseEntity<Deposit> updateDeposit(@RequestBody Deposit deposit, @PathVariable Long depositId) {
-        return null;
+        return depositService.updateDeposit(deposit, depositId);
     }
 
     @RequestMapping(value = "/deposits/{depositId}", method = DELETE)
     public ResponseEntity deleteDepositById(@PathVariable Long depositId) {
-        return null;
+        return depositService.deleteDepositById(depositId);
     }
 }
