@@ -1,5 +1,8 @@
 package io.zipcoder.service.implementations;
 
+import io.zipcoder.repository.BillRepository;
+import io.zipcoder.service.interfaces.BillService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,5 +12,12 @@ import org.springframework.stereotype.Service;
  * date: 4/9/18
  */
 @Service
-public class BillServiceImpl {
+public class BillServiceImpl implements BillService {
+
+    private BillRepository billRepo;
+
+    @Autowired
+    public BillServiceImpl(BillRepository billRepo) {
+        this.billRepo = billRepo;
+    }
 }
