@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
  * author: https://github.com/vvmk
  * date: 4/9/18
  */
-interface WithdrawalService {
+public interface WithdrawalService {
     ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(Long accountId);
 
     ResponseEntity<Withdrawal> getWithdrawalById(Long withdrawalId);

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
  * date: 4/9/18
  */
 
-interface AccountService {
+public interface AccountService {
     ResponseEntity<Iterable<Account>> getAllAccounts();
 
     ResponseEntity<Account> getAccountById(Long accountId);

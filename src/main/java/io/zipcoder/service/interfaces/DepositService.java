@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
  * author: https://github.com/vvmk
  * date: 4/9/18
  */
-interface DepositService {
+public interface DepositService {
     ResponseEntity<Iterable<Deposit>> getAllDepositsByAccountId(Long accountId);
 
     ResponseEntity<Deposit> getDepositById(Long depositId);

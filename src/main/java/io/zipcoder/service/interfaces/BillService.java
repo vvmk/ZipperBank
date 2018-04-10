@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
  * author: https://github.com/vvmk
  * date: 4/9/18
  */
-interface BillService {
+public interface BillService {
     ResponseEntity<Iterable<Bill>> getBillsByAccountId(Long accountId);
 
     ResponseEntity<Bill> getBillById(Long id);

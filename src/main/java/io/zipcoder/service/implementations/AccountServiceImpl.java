@@ -23,6 +23,26 @@ public class AccountServiceImpl implements AccountService {
         this.accountRepo = accountRepo;
     }
 
+    public ResponseEntity<Account> getAccountById(Long accountId) {
+        return null;
+    }
+
+    public ResponseEntity<Iterable<Account>> getAccountsByCustomerId(Long customerId) {
+        return null;
+    }
+
+    public ResponseEntity<Account> createAccount(Account account, Long customerId) {
+        return null;
+    }
+
+    public ResponseEntity<Account> updateAccount(Account account, Long accountId) {
+        return null;
+    }
+
+    public ResponseEntity deleteAccountById(Long accountId) {
+        return null;
+    }
+
     public ResponseEntity<Iterable<Account>> getAllAccounts() {
         return null;
     }
