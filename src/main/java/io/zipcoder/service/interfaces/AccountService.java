@@ -10,6 +10,16 @@ import org.springframework.http.ResponseEntity;
  * date: 4/9/18
  */
 
-public interface AccountService {
+interface AccountService {
     ResponseEntity<Iterable<Account>> getAllAccounts();
+
+    ResponseEntity<Account> getAccountById(Long accountId);
+
+    ResponseEntity<Iterable<Account>> getAccountsByCustomerId(Long customerId);
+
+    ResponseEntity<Account> createAccount(Account account, Long customerId);
+
+    ResponseEntity<Account> updateAccount(Account account, Long accountId);
+
+    ResponseEntity deleteAccountById(Long accountId);
 }
