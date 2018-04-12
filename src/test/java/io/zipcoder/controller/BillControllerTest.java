@@ -13,14 +13,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.Collections.singletonList;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.Matchers.is;
 
 /**
  * project: zcwbank
@@ -51,6 +48,7 @@ public class BillControllerTest {
         mockBill.setId(1L);
         mockBill.setAccount(mockAccount);
         mockBill.setStatus("OVERDUE_AF");
+
     }
 
     @Test
@@ -63,13 +61,18 @@ public class BillControllerTest {
 
         mockMvc.perform(get("/accounts/1/bills")
                 .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].status", is(mockBill.getStatus())));
+                .andExpect(status().isOk());
     }
 
     @Test
     public void getBillById() throws Exception {
+        ResponseEntity<Bill> response = new ResponseEntity<>(mockBill, OK);
+        given(billController.getBillById(mockBill.getId()))
+                .willReturn(response);
+
+        mockMvc.perform(get("/bills/1")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test

@@ -31,27 +31,27 @@ public class BillController {
     }
 
     @RequestMapping(value = "/bills/{billId}", method = GET)
-    public ResponseEntity<Bill> getBillById(@PathVariable Long billId) {
+    public ResponseEntity<Bill> getBillById(@PathVariable("billId") Long billId) {
         return billService.getBillById(billId);
     }
 
     @RequestMapping(value = "/customers/{customerId}/bills", method = GET)
-    public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(@PathVariable Long customerId) {
+    public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(@PathVariable("customerId") Long customerId) {
         return billService.getBillsByCustomerId(customerId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = POST)
-    public ResponseEntity<Bill> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
+    public ResponseEntity<Bill> createBill(@RequestBody Bill bill, @PathVariable("accountId") Long accountId) {
         return billService.createBill(bill, accountId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = PUT)
-    public ResponseEntity<Bill> updateBill(@RequestBody Bill bill, @PathVariable Long billId) {
+    public ResponseEntity<Bill> updateBill(@RequestBody Bill bill, @PathVariable("billId") Long billId) {
         return billService.updateBill(bill, billId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = DELETE)
-    public ResponseEntity deleteBillById(@PathVariable Long billId) {
+    public ResponseEntity deleteBillById(@PathVariable("billId") Long billId) {
         return billService.deleteBillById(billId);
     }
 }
