@@ -23,7 +23,6 @@ public class Bill {
     private Double payment_amount;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id")
     private Account account;
 
     public Bill() {

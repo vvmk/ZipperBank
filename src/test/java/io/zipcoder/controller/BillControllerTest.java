@@ -1,7 +1,9 @@
 package io.zipcoder.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Bill;
+import io.zipcoder.domain.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.Collections.singletonList;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -38,11 +41,18 @@ public class BillControllerTest {
 
     private Bill mockBill;
     private Account mockAccount;
+    private Customer mockCustomer;
+
+    private ObjectMapper om = new ObjectMapper();
 
     @Before
     public void setUp() {
+        mockCustomer = new Customer();
+        mockCustomer.setId(1L);
+
         mockAccount = new Account();
         mockAccount.setId(1L);
+        mockAccount.setCustomer(mockCustomer);
 
         mockBill = new Bill();
         mockBill.setId(1L);
@@ -67,6 +77,7 @@ public class BillControllerTest {
     @Test
     public void getBillById() throws Exception {
         ResponseEntity<Bill> response = new ResponseEntity<>(mockBill, OK);
+
         given(billController.getBillById(mockBill.getId()))
                 .willReturn(response);
 
@@ -77,18 +88,58 @@ public class BillControllerTest {
 
     @Test
     public void getBillsByCustomerId() throws Exception {
-        //ResponseEntity<Iterable<Bill>>
+        Iterable<Bill> bills = singletonList(mockBill);
+        ResponseEntity<Iterable<Bill>> response = new ResponseEntity<>(bills, OK);
+
+        given(billController.getBillsByCustomerId(mockAccount.getCustomer().getId()))
+                .willReturn(response);
+
+        mockMvc.perform(get("/customers/1/bills")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void createBill() throws Exception {
+        ResponseEntity<Bill> response = new ResponseEntity<>(mockBill, CREATED);
+
+        given(billController.createBill(mockBill, mockAccount.getId()))
+                .willReturn(response);
+
+        String body = om.writeValueAsString(mockBill);
+
+        mockMvc.perform(
+                post("/accounts/1/bills")
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void updateBill() throws Exception {
+        ResponseEntity<Bill> response = new ResponseEntity<>(mockBill, OK);
+
+        given(billController.updateBill(mockBill, mockBill.getId()))
+                .willReturn(response);
+
+        String body = om.writeValueAsString(mockBill);
+
+        mockMvc.perform(
+                put("/bills/1")
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void deleteBillById() throws Exception {
+        ResponseEntity response = new ResponseEntity(OK);
+
+        given(billController.deleteBillById(mockBill.getId()))
+                .willReturn(response);
+
+        mockMvc.perform(delete("/bills/1")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
