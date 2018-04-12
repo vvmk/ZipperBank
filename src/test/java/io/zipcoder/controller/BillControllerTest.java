@@ -41,13 +41,12 @@ public class BillControllerTest {
 
     private Bill mockBill;
     private Account mockAccount;
-    private Customer mockCustomer;
 
     private ObjectMapper om = new ObjectMapper();
 
     @Before
     public void setUp() {
-        mockCustomer = new Customer();
+        Customer mockCustomer = new Customer();
         mockCustomer.setId(1L);
 
         mockAccount = new Account();
@@ -58,7 +57,6 @@ public class BillControllerTest {
         mockBill.setId(1L);
         mockBill.setAccount(mockAccount);
         mockBill.setStatus("OVERDUE_AF");
-
     }
 
     @Test
