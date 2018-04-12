@@ -77,6 +77,7 @@ public class BillControllerTest {
 
     @Test
     public void getBillsByCustomerId() throws Exception {
+        //ResponseEntity<Iterable<Bill>>
     }
 
     @Test
