@@ -1,6 +1,7 @@
 package io.zipcoder.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * project: zcwbank
@@ -19,10 +20,22 @@ public class Customer {
     private String last_name;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_address_id")
     private Address address;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private List<Account> accounts;
+
     public Customer() {
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public Long getId() {
