@@ -26,13 +26,13 @@ public class BillController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = GET)
-    public ResponseEntity<Iterable<Bill>> getBillsByAccountId(@PathVariable Long accountId) {
+    public ResponseEntity<Iterable<Bill>> getBillsByAccountId(@PathVariable("accountId") Long accountId) {
         return billService.getBillsByAccountId(accountId);
     }
 
     @RequestMapping(value = "/bills/{billId}", method = GET)
-    public ResponseEntity<Bill> getBillById(@PathVariable Long id) {
-        return billService.getBillById(id);
+    public ResponseEntity<Bill> getBillById(@PathVariable Long billId) {
+        return billService.getBillById(billId);
     }
 
     @RequestMapping(value = "/customers/{customerId}/bills", method = GET)

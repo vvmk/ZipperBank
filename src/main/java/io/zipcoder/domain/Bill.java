@@ -21,6 +21,7 @@ public class Bill {
     private Integer recurring_date;
     private String upcoming_payment_date;
     private Double payment_amount;
+
     @ManyToOne
     @JoinColumn(name = "bill_id")
     private Account account;
