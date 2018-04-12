@@ -10,4 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  * date: 4/9/18
  */
 public interface AccountRepository extends CrudRepository<Account, Long> {
+    Iterable<Account> findAllByCustomer_Id(Long customerId);
 }
