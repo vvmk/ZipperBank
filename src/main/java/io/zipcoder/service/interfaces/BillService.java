@@ -3,6 +3,8 @@ package io.zipcoder.service.interfaces;
 import io.zipcoder.domain.Bill;
 import org.springframework.http.ResponseEntity;
 
+import java.io.FileNotFoundException;
+
 /**
  * project: zcwbank
  * package: io.zipcoder.service.interfaces
