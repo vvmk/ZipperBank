@@ -12,6 +12,9 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface DepositRepository extends CrudRepository<Deposit, Long> {
 
-   Iterable<Deposit> getDepositsByAccount_Id(Long payee_id);
-   Deposit getDepositById(Long id);
+
+    Iterable<Deposit> getDepositsByAccount_Id(Long payee_id);
+
+    Deposit getDepositById(Long id);
 }
+

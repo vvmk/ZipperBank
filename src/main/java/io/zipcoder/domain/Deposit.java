@@ -3,6 +3,9 @@ package io.zipcoder.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import io.zipcoder.domain.Account;
 
 /**
  * project: zcwbank
@@ -20,7 +23,9 @@ public class Deposit {
     private String type;
     private String transaction_date;
 
+    @ManyToOne
     private Account account;
+
     private String medium;
     private Double amount;
     private String description;
