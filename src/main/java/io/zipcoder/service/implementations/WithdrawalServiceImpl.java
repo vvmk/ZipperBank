@@ -50,7 +50,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal) {
+    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
         Withdrawal w = withdrawalRepo.save(withdrawal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
