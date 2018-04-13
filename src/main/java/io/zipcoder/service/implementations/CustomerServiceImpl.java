@@ -71,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public ResponseEntity deleteCustomerById(Long customerId) {
-        return null;
+        customerRepo.deleteById(customerId);
+        return new ResponseEntity(OK);
     }
 }

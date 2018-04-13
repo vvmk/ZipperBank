@@ -114,7 +114,7 @@ public class CustomerServiceImplTest {
     public void updateCustomer() {
         given(customerRepo.existsById(anyLong()))
                 .willReturn(true);
-        
+
         given(customerRepo.save(any(Customer.class)))
                 .willReturn(mockCustomer);
 
@@ -127,5 +127,10 @@ public class CustomerServiceImplTest {
 
     @Test
     public void deleteCustomerById() {
+        ResponseEntity expected = new ResponseEntity(OK);
+        ResponseEntity actual = customerService.deleteCustomerById(mockCustomer.getId());
+
+        verify(customerRepo).deleteById(anyLong());
+        assertEquals(expected, actual);
     }
 }
