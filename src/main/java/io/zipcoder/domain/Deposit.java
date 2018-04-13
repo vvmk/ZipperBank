@@ -19,7 +19,8 @@ public class Deposit {
 
     private String type;
     private String transaction_date;
-    private Long payee_id;
+
+    private Account account;
     private String medium;
     private Double amount;
     private String description;
@@ -51,12 +52,12 @@ public class Deposit {
         this.transaction_date = transaction_date;
     }
 
-    public Long getPayee_id() {
-        return payee_id;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setPayee_id(Long payee_id) {
-        this.payee_id = payee_id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getMedium() {

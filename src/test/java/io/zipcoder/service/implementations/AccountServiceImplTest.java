@@ -6,10 +6,12 @@ import io.zipcoder.repository.AccountRepository;
 import io.zipcoder.repository.CustomerRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
@@ -28,6 +30,8 @@ import static org.springframework.http.HttpStatus.OK;
  * author: https://github.com/vvmk
  * date: 4/13/18
  */
+
+@RunWith(SpringRunner.class)
 public class AccountServiceImplTest {
 
     @InjectMocks
