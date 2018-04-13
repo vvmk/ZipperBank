@@ -4,8 +4,11 @@ import io.zipcoder.domain.Deposit;
 import io.zipcoder.repository.DepositRepository;
 import io.zipcoder.service.interfaces.DepositService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * project: zcwbank
@@ -24,22 +27,35 @@ public class DepositServiceImpl implements DepositService {
     }
 
     public ResponseEntity<Iterable<Deposit>> getAllDepositsByAccountId(Long accountId) {
-        return null;
+        //access the deposit repository
+        Iterable<Deposit> allDeposits = depositRepo.getDepositsByPayee_id(accountId);
+        //return all deposits from that have that account id;
+        return new ResponseEntity<>(allDeposits, HttpStatus.OK);
     }
 
     public ResponseEntity<Deposit> getDepositById(Long depositId) {
-        return null;
+        Deposit deposit = depositRepo.getDepositById(depositId);
+        return new ResponseEntity<>(deposit, HttpStatus.OK);
     }
 
     public ResponseEntity<Deposit> createDeposit(Deposit deposit, Long accountId) {
-        return null;
+        depositRepo.save(deposit);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(ServletUriComponentsBuilder.
+                fromCurrentRequest().path("/{accountId}").buildAndExpand(accountId).toUri());
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Deposit> updateDeposit(Deposit deposit, Long depositId) {
+        depositRepo.save(deposit);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(ServletUriComponentsBuilder.
+                fromCurrentRequest().path("/{depositId}").buildAndExpand(depositId).toUri());
         return null;
     }
 
     public ResponseEntity deleteDepositById(Long depositId) {
-        return null;
+        depositRepo.deleteById(depositId);
+        return new ResponseEntity(HttpStatus.valueOf(204));
     }
 }
