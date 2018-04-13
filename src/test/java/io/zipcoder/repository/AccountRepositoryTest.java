@@ -34,17 +34,6 @@ public class AccountRepositoryTest {
     @Autowired
     private AccountRepository accountRepo;
 
-    @Autowired
-    private CustomerRepository customerRepo;
-
-    private String nickname = "checking";
-    private final Long customerId = 10L;
-    private final Long accountId = 999L;
-
-    @Before
-    public void setUp() {
-    }
-
     @Test
     public void whenFindAllByCustomer_Id() {
         // given
@@ -53,7 +42,6 @@ public class AccountRepositoryTest {
 
         Account account = new Account();
         account.setCustomer(mockCustomer);
-        account.setNickname(nickname);
 
         entityManager.persist(account);
         entityManager.flush();
