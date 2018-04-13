@@ -58,7 +58,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public ResponseEntity<Customer> updateCustomer(Customer customer, Long customerId) {
-        return null;
+        try {
+            if (!customerRepo.existsById(customerId))
+                throw new Exception();
+
+            customer.setId(customerId);
+            Customer returnedCustomer = customerRepo.save(customer);
+            return new ResponseEntity<>(returnedCustomer, OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Customer(), BAD_REQUEST);
+        }
     }
 
     public ResponseEntity deleteCustomerById(Long customerId) {

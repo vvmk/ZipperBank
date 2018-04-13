@@ -112,6 +112,17 @@ public class CustomerServiceImplTest {
 
     @Test
     public void updateCustomer() {
+        given(customerRepo.existsById(anyLong()))
+                .willReturn(true);
+        
+        given(customerRepo.save(any(Customer.class)))
+                .willReturn(mockCustomer);
+
+        ResponseEntity<Customer> expected = new ResponseEntity<>(mockCustomer, OK);
+        ResponseEntity<Customer> actual = customerService.updateCustomer(mockCustomer, mockCustomer.getId());
+
+        verify(customerRepo).save(any(Customer.class));
+        assertEquals(expected, actual);
     }
 
     @Test
