@@ -3,6 +3,7 @@ package io.zipcoder.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * project: zcwbank
@@ -20,12 +21,22 @@ public class Withdrawal {
     private String type;
     private String transaction_date;
     private String status;
-    private Long account_id;
+
+    @ManyToOne
+    private Account account;
+
     private String medium;
     private Double amount;
     private String description;
-
     public Withdrawal() {
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Long getId() {
@@ -58,14 +69,6 @@ public class Withdrawal {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Long getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(Long account_id) {
-        this.account_id = account_id;
     }
 
     public String getMedium() {
