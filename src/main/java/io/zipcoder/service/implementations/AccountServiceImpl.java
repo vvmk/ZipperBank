@@ -64,10 +64,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public ResponseEntity deleteAccountById(Long accountId) {
-        return null;
+        accountRepo.deleteById(accountId);
+        return new ResponseEntity(OK);
     }
 
     public ResponseEntity<Iterable<Account>> getAllAccounts() {
-        return null;
+        Iterable<Account> accounts = accountRepo.findAll();
+        return new ResponseEntity<>(accounts, OK);
     }
 }

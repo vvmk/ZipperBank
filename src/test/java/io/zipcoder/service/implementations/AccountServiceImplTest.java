@@ -15,11 +15,9 @@ import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -107,11 +105,23 @@ public class AccountServiceImplTest {
 
     @Test
     public void deleteAccountById() {
-        fail();
+        ResponseEntity expected = new ResponseEntity(OK);
+        ResponseEntity actual = accountService.deleteAccountById(mockAccount.getId());
+
+        verify(accountRepo).deleteById(anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getAllAccounts() {
-        fail();
+        Iterable<Account> accounts = singletonList(mockAccount);
+        given(accountRepo.findAll())
+                .willReturn(accounts);
+
+        ResponseEntity expected = new ResponseEntity(accounts, OK);
+        ResponseEntity actual = accountService.getAllAccounts();
+
+        verify(accountRepo).findAll();
+        assertEquals(expected, actual);
     }
 }
