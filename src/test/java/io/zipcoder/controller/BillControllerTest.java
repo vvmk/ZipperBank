@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * date: 4/12/18
  */
 
+@SuppressWarnings("unchecked")
 @RunWith(SpringRunner.class)
 @WebMvcTest(BillController.class)
 public class BillControllerTest {
