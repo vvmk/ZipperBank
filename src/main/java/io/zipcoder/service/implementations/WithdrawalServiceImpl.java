@@ -29,7 +29,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     }
 
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(Long accountId) {
-        Iterable<Withdrawal> allWithdrawals = withdrawalRepo.getAllByAmount(accountId);
+        Iterable<Withdrawal> allWithdrawals = withdrawalRepo.findAllByAccount_Id(accountId);
         return new ResponseEntity<>(allWithdrawals, HttpStatus.OK);
     }
 

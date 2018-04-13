@@ -13,12 +13,20 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * project: zcwbank
@@ -47,28 +55,38 @@ public class WithdrawalServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         mockAccount = new Account();
-        mockAccount.setId(1234L);
+        mockAccount.setId(4444L);
 
         mockWithdrawal = new Withdrawal();
         mockWithdrawal.setAmount(500.00);
         mockWithdrawal.setId(666L);
-        mockWithdrawal.setAccount_id(1234L);
-
-
+        mockWithdrawal.setAccount(mockAccount);
     }
 
     @Test
-    public void testGetAllWithdrawalByAccountId(){
-        withdrawalServiceImpl.getAllWithdrawalsByAccountId(1L);
-        verify(withdrawalRepoMock).getAllByAmount(1L);
+     public void testGetAllWithdrawalByAccountId(){
+        // given
+        List<Withdrawal> withdrawals = new ArrayList<>();
+        withdrawals.add(mockWithdrawal);
 
-        assertEquals(13.00, withdrawalServiceImpl.getAllWithdrawalsByAccountId(1234l));
+        given(withdrawalRepoMock.findAllByAccount_Id(anyLong()))
+                .willReturn(withdrawals);
+
+        // when
+        ResponseEntity<Iterable<Withdrawal>> expected = new ResponseEntity<>(withdrawals, HttpStatus.OK);
+        ResponseEntity<Iterable<Withdrawal>> actual = withdrawalServiceImpl.getAllWithdrawalsByAccountId(mockAccount.getId());
+
+        // then
+        verify(withdrawalRepoMock).findAllByAccount_Id(anyLong());
+        assertEquals(expected, actual);
     }
 
 
     @Test
     public void testGetWithdrawalById(){
 
+
+       // assertEquals(expected, actual);
     }
 
     @Test
