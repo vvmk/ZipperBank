@@ -55,8 +55,8 @@ public class DepositServiceImplTest {
 
     @Test
     public void getAllDepositsByAccountIdTest(){
-        given(depositService.getAllDepositsByAccountId(mockAccount.getId()))
-                .willReturn();
+//        given(depositService.getAllDepositsByAccountId(mockAccount.getId()))
+//                .willReturn();
     }
 
 }
