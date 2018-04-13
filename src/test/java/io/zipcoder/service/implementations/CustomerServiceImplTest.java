@@ -15,10 +15,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -72,14 +75,39 @@ public class CustomerServiceImplTest {
 
     @Test
     public void getAllCustomers() {
+        Iterable<Customer> customers = singletonList(mockCustomer);
+        given(customerRepo.findAll())
+                .willReturn(customers);
+
+        ResponseEntity<Iterable<Customer>> expected = new ResponseEntity<>(customers, OK);
+        ResponseEntity<Iterable<Customer>> actual = customerService.getAllCustomers();
+
+        verify(customerRepo).findAll();
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getCustomerById() {
+        given(customerRepo.findById(anyLong()))
+                .willReturn(Optional.of(mockCustomer));
+
+        ResponseEntity<Customer> expected = new ResponseEntity<>(mockCustomer, OK);
+        ResponseEntity<Customer> actual = customerService.getCustomerById(mockCustomer.getId());
+
+        verify(customerRepo).findById(anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
     public void createCustomer() {
+        given(customerRepo.save(any(Customer.class)))
+                .willReturn(mockCustomer);
+
+        ResponseEntity<Customer> expected = new ResponseEntity<>(mockCustomer, CREATED);
+        ResponseEntity<Customer> actual = customerService.createCustomer(mockCustomer);
+
+        verify(customerRepo).save(any(Customer.class));
+        assertEquals(expected, actual);
     }
 
     @Test

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -42,15 +43,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public ResponseEntity<Iterable<Customer>> getAllCustomers() {
-        return null;
+        Iterable<Customer> foundCustomers = customerRepo.findAll();
+        return new ResponseEntity<>(foundCustomers, OK);
     }
 
     public ResponseEntity<Customer> getCustomerById(Long customerId) {
-        return null;
+        Customer foundCustomer = customerRepo.findById(customerId).orElse(new Customer());
+        return new ResponseEntity<>(foundCustomer, OK);
     }
 
     public ResponseEntity<Customer> createCustomer(Customer customer) {
-        return null;
+        Customer returnedCustomer = customerRepo.save(customer);
+        return new ResponseEntity<>(returnedCustomer, CREATED);
     }
 
     public ResponseEntity<Customer> updateCustomer(Customer customer, Long customerId) {
