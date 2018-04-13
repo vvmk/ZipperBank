@@ -62,7 +62,9 @@ public class BillServiceImpl implements BillService {
     }
 
     public ResponseEntity<Bill> updateBill(Bill bill, Long billId) {
-        return null;
+        bill.setId(billId);
+        Bill returnedBill = billRepo.save(bill);
+        return new ResponseEntity<>(returnedBill, OK);
     }
 
     public ResponseEntity deleteBillById(Long billId) {

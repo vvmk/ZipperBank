@@ -76,7 +76,7 @@ public class BillServiceImplTest {
 
     @Test
     public void testGetBillById() {
-        given(billRepo.findById(mockBill.getId()))
+        given(billRepo.findById(anyLong()))
                 .willReturn(Optional.of(mockBill));
 
         ResponseEntity<Bill> expected = new ResponseEntity<>(mockBill, OK);
@@ -90,7 +90,7 @@ public class BillServiceImplTest {
     public void testGetBillsByCustomerId() {
         Iterable<Bill> bills = singletonList(mockBill);
         Long custId = mockAccount.getCustomer().getId();
-        given(billRepo.findAllByAccountCustomer_Id(custId))
+        given(billRepo.findAllByAccountCustomer_Id(anyLong()))
                 .willReturn(bills);
 
         ResponseEntity<Iterable<Bill>> expected = new ResponseEntity<>(bills, OK);
@@ -105,11 +105,23 @@ public class BillServiceImplTest {
         given(accountRepo.findById(anyLong()))
                 .willReturn(Optional.of(mockAccount));
 
-        given(billRepo.save(mockBill))
+        given(billRepo.save(any(Bill.class)))
                 .willReturn(mockBill);
 
         ResponseEntity<Bill> expected = new ResponseEntity<>(mockBill, CREATED);
         ResponseEntity<Bill> actual = billService.createBill(mockBill, mockAccount.getId());
+
+        verify(billRepo).save(any(Bill.class));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testUpdateBill() {
+        given(billRepo.save(any(Bill.class)))
+                .willReturn(mockBill);
+
+        ResponseEntity<Bill> expected = new ResponseEntity<>(mockBill, OK);
+        ResponseEntity<Bill> actual = billService.updateBill(mockBill, mockBill.getId());
 
         verify(billRepo).save(any(Bill.class));
         assertEquals(expected, actual);
