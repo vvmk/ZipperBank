@@ -1,7 +1,6 @@
 package io.zipcoder.repository;
 
 import io.zipcoder.domain.Deposit;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**

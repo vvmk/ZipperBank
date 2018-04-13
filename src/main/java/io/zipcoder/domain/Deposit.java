@@ -5,8 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import io.zipcoder.domain.Account;
-
 /**
  * project: zcwbank
  * package: io.zipcoder.domain
