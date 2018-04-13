@@ -15,6 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
  * author: https://github.com/vvmk
  * date: 4/9/18
  */
+
 @Service
 public class BillServiceImpl implements BillService {
 
@@ -26,7 +27,8 @@ public class BillServiceImpl implements BillService {
     }
 
     public ResponseEntity<Iterable<Bill>> getBillsByAccountId(Long accountId) {
-        return null;
+        Iterable<Bill> bills = billRepo.findAllByAccount_Id(accountId);
+        return new ResponseEntity<>(bills, OK);
     }
 
     public ResponseEntity<Bill> getBillById(Long id) {
