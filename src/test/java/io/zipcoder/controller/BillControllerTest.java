@@ -131,11 +131,6 @@ public class BillControllerTest {
 
     @Test
     public void deleteBillById() throws Exception {
-        ResponseEntity response = new ResponseEntity(OK);
-
-        given(billController.deleteBillById(mockBill.getId()))
-                .willReturn(response);
-
         mockMvc.perform(delete("/bills/1")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
