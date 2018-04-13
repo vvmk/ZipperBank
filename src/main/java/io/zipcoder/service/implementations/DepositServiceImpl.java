@@ -28,7 +28,7 @@ public class DepositServiceImpl implements DepositService {
 
     public ResponseEntity<Iterable<Deposit>> getAllDepositsByAccountId(Long accountId) {
         //access the deposit repository
-        Iterable<Deposit> allDeposits = depositRepo.getDepositsByPayee_id(accountId);
+        Iterable<Deposit> allDeposits = depositRepo.getDepositsByAccount_Id(accountId);
         //return all deposits from that have that account id;
         return new ResponseEntity<>(allDeposits, HttpStatus.OK);
     }
