@@ -7,10 +7,12 @@ import io.zipcoder.repository.AccountRepository;
 import io.zipcoder.repository.BillRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
@@ -30,6 +32,7 @@ import static org.springframework.http.HttpStatus.OK;
  * date: 4/9/18
  */
 
+@RunWith(SpringRunner.class)
 public class BillServiceImplTest {
 
     @InjectMocks
@@ -57,7 +60,6 @@ public class BillServiceImplTest {
 
         mockBill = new Bill();
         mockBill.setId(1L);
-        mockBill.setStatus("OVERDUE_AF");
         mockBill.setAccount(mockAccount);
     }
 
