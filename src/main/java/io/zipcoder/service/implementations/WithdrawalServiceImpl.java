@@ -4,8 +4,13 @@ import io.zipcoder.domain.Withdrawal;
 import io.zipcoder.repository.WithdrawalRepository;
 import io.zipcoder.service.interfaces.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * project: zcwbank
@@ -24,22 +29,35 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     }
 
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(Long accountId) {
-        return null;
+        Iterable<Withdrawal> allWithdrawals = withdrawalRepo.getAllByAmount(accountId);
+        return new ResponseEntity<>(allWithdrawals, HttpStatus.OK);
     }
 
     public ResponseEntity<Withdrawal> getWithdrawalById(Long withdrawalId) {
-        return null;
+        Withdrawal singleWithdrawal = withdrawalRepo.getById(withdrawalId);
+        return new ResponseEntity<>(singleWithdrawal, HttpStatus.OK);
     }
 
     public ResponseEntity<Withdrawal> createWithdrawal(Withdrawal withdrawal, Long accountId) {
-        return null;
+        withdrawal = withdrawalRepo.save(withdrawal);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newPollUri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(withdrawal.getId())
+                .toUri();
+        responseHeaders.setLocation(newPollUri);
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
-        return null;
+    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal) {
+        Withdrawal w = withdrawalRepo.save(withdrawal);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity deleteWithdrawalById(Long withdrawalId) {
-        return null;
+    public ResponseEntity<?> deleteWithdrawalById(Long withdrawalId) {
+        withdrawalRepo.deleteById(withdrawalId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
+
