@@ -84,9 +84,19 @@ public class WithdrawalServiceImplTest {
 
     @Test
     public void testGetWithdrawalById(){
+        List<Withdrawal> withdrawals = new ArrayList<>();
+        withdrawals.add(mockWithdrawal);
 
+        given(withdrawalRepoMock.getById(anyLong()))
+                .willReturn(mockWithdrawal);
 
-       // assertEquals(expected, actual);
+        // when
+        ResponseEntity<Withdrawal> expected = new ResponseEntity<>(mockWithdrawal, HttpStatus.OK);
+        ResponseEntity<Withdrawal> actual = withdrawalServiceImpl.getWithdrawalById(mockWithdrawal.getId());
+
+        // then
+        verify(withdrawalRepoMock).getById(anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test

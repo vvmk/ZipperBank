@@ -15,6 +15,8 @@ public interface WithdrawalRepository extends CrudRepository<Withdrawal, Long> {
 
      Iterable<Withdrawal> findAllByAccount_Id(Long accountId);
 
+     Iterable<Withdrawal> findByAccount_Id(Long accountId);
+
      Withdrawal getById(Long withdrawalId);
 
 }
