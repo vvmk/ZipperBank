@@ -42,4 +42,8 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<Customer> updateCustomer(Customer customer, Long customerId) {
         return null;
     }
+
+    public ResponseEntity deleteCustomerById(Long customerId) {
+        return null;
+    }
 }

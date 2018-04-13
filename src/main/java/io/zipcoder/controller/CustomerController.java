@@ -29,7 +29,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}/customer", method = GET)
-    public ResponseEntity<Customer> getCustomerByAccountId(@PathVariable Long accountId) {
+    public ResponseEntity<Customer> getCustomerByAccountId(@PathVariable("accountId") Long accountId) {
         return customerService.getCustomerByAccountId(accountId);
     }
 
@@ -39,7 +39,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/customers/{customerId}", method = GET)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerId) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("customerId") Long customerId) {
         return customerService.getCustomerById(customerId);
     }
 
@@ -49,7 +49,12 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/customers/{customerId}", method = PUT)
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable Long customerId) {
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable("customerId") Long customerId) {
         return customerService.updateCustomer(customer, customerId);
+    }
+
+    @RequestMapping(value = "/customers/{customerId}", method = DELETE)
+    public ResponseEntity deleteCustomer(@PathVariable("customerId") Long customerId) {
+        return customerService.deleteCustomerById(customerId);
     }
 }
