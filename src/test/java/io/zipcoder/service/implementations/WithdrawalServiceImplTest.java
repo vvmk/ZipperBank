@@ -1,7 +1,5 @@
 package io.zipcoder.service.implementations;
 
-<<<<<<< HEAD
-=======
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Withdrawal;
 import io.zipcoder.repository.AccountRepository;
@@ -22,7 +20,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
->>>>>>> stash and rebase
 /**
  * project: zcwbank
  * package: io.zipcoder.service.implementations
