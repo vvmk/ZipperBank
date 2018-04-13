@@ -7,12 +7,12 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -33,6 +33,7 @@ public class AccountServiceImplTest {
     private AccountRepository accountRepo;
 
     private Account mockAccount;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -55,21 +56,26 @@ public class AccountServiceImplTest {
 
     @Test
     public void getAccountsByCustomerId() {
+        fail();
     }
 
     @Test
     public void createAccount() {
+        fail();
     }
 
     @Test
     public void updateAccount() {
+        fail();
     }
 
     @Test
     public void deleteAccountById() {
+        fail();
     }
 
     @Test
     public void getAllAccounts() {
+        fail();
     }
 }

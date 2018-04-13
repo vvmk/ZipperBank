@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpStatus.OK;
@@ -89,8 +88,8 @@ public class DepositControllerTest {
         String body = om.writeValueAsString(mockDeposit);
         mockMvc.perform(
                 post("/accounts/1/deposits")
-                .contentType(APPLICATION_JSON)
-                .content(body))
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
                 .andExpect(status().isOk());
     }
 
@@ -102,8 +101,8 @@ public class DepositControllerTest {
         String body = om.writeValueAsString(mockDeposit);
         mockMvc.perform(
                 put("/deposits/1")
-                    .contentType(APPLICATION_JSON)
-                    .content(body))
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
                 .andExpect(status().isOk());
     }
 

@@ -1,7 +1,5 @@
 package io.zipcoder.service.implementations;
 
-import static org.junit.Assert.*;
-
 /**
  * project: zcwbank
  * package: io.zipcoder.service.implementations

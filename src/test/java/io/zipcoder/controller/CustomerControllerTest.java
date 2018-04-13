@@ -3,7 +3,6 @@ package io.zipcoder.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Customer;
-import org.apache.coyote.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpStatus.OK;
@@ -98,8 +96,8 @@ public class CustomerControllerTest {
         String body = om.writeValueAsString(mockCustomer);
         mockMvc.perform(
                 post("/customers")
-                .contentType(APPLICATION_JSON)
-                .content(body))
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
                 .andExpect(status().isOk());
     }
 
@@ -111,8 +109,8 @@ public class CustomerControllerTest {
         String body = om.writeValueAsString(mockCustomer);
         mockMvc.perform(
                 put("/customers/1")
-                .contentType(APPLICATION_JSON)
-                .content(body))
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
                 .andExpect(status().isOk());
     }
 
