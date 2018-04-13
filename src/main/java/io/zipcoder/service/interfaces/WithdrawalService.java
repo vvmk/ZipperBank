@@ -16,7 +16,7 @@ public interface WithdrawalService {
 
     ResponseEntity<Withdrawal> createWithdrawal(Withdrawal withdrawal, Long accountId);
 
-    ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal);
+    ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId);
 
     ResponseEntity deleteWithdrawalById(Long withdrawalId);
 }

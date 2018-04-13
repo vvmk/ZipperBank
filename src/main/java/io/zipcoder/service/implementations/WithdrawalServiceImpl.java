@@ -37,7 +37,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         return null;
     }
 
-    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal) {
+    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
         return null;
     }
 

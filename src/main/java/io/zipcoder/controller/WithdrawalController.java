@@ -27,27 +27,27 @@ public class WithdrawalController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = GET)
-    public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(@PathVariable Long accountId) {
+    public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawalsByAccountId(@PathVariable("accountId") Long accountId) {
         return withdrawalService.getAllWithdrawalsByAccountId(accountId);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = GET)
-    public ResponseEntity<Withdrawal> getWithdrawalById(@PathVariable Long withdrawalId) {
+    public ResponseEntity<Withdrawal> getWithdrawalById(@PathVariable("withdrawalId") Long withdrawalId) {
         return withdrawalService.getWithdrawalById(withdrawalId);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawal", method = POST)
-    public ResponseEntity<Withdrawal> createWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long accountId) {
+    public ResponseEntity<Withdrawal> createWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable("accountId") Long accountId) {
         return withdrawalService.createWithdrawal(withdrawal, accountId);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = PUT)
-    public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal) {
-        return withdrawalService.updateWithdrawal(withdrawal);
+    public ResponseEntity<Withdrawal> updateWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable("withdrawalId") Long withdrawalId) {
+        return withdrawalService.updateWithdrawal(withdrawal, withdrawalId);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = DELETE)
-    public ResponseEntity deleteWithdrawalById(@PathVariable Long withdrawalId) {
+    public ResponseEntity deleteWithdrawalById(@PathVariable("withdrawalId") Long withdrawalId) {
         return withdrawalService.deleteWithdrawalById(withdrawalId);
     }
 }
