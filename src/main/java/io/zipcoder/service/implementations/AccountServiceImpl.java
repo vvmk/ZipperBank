@@ -32,7 +32,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public ResponseEntity<Iterable<Account>> getAccountsByCustomerId(Long customerId) {
-        return null;
+        Iterable<Account> accounts = accountRepo.findAllByCustomer_Id(customerId);
+        return new ResponseEntity<>(accounts, OK);
     }
 
     public ResponseEntity<Account> createAccount(Account account, Long customerId) {
