@@ -62,7 +62,7 @@ public class DepositServiceImplTest {
 
         mockDeposit = new Deposit();
         mockDeposit.setId(369L);
-        mockDeposit.setPayee_id(mockAccount.getId());
+        //ockDeposit.setPayee_id(mockAccount.getId());
     }
 
     @Test

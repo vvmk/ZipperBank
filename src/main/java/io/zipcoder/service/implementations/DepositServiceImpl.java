@@ -1,5 +1,6 @@
 package io.zipcoder.service.implementations;
 
+import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Deposit;
 import io.zipcoder.repository.AccountRepository;
 import io.zipcoder.repository.DepositRepository;
@@ -42,7 +43,7 @@ public class DepositServiceImpl implements DepositService {
 
     public ResponseEntity<Deposit> createDeposit(Deposit deposit, Long accountId) {
         //TODO: Check if account exists
-        deposit.setPayee_id(accountId);
+        deposit.setAccount(new Account());
         depositRepo.save(deposit);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
