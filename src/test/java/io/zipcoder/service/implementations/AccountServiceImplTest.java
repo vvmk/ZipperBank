@@ -95,7 +95,14 @@ public class AccountServiceImplTest {
 
     @Test
     public void updateAccount() {
-        fail();
+        given(accountRepo.save(any(Account.class)))
+                .willReturn(mockAccount);
+
+        ResponseEntity<Account> expected = new ResponseEntity<>(mockAccount, OK);
+        ResponseEntity<Account> actual = accountService.updateAccount(mockAccount, mockAccount.getId());
+
+        verify(accountRepo).save(any(Account.class));
+        assertEquals(expected, actual);
     }
 
     @Test

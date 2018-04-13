@@ -54,7 +54,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public ResponseEntity<Account> updateAccount(Account account, Long accountId) {
-        return null;
+        try {
+            account.setId(accountId);
+            Account returnedAccount = accountRepo.save(account);
+            return new ResponseEntity<>(returnedAccount, OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Account(), BAD_REQUEST);
+        }
     }
 
     public ResponseEntity deleteAccountById(Long accountId) {
