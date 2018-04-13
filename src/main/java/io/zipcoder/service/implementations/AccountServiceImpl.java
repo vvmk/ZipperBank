@@ -1,12 +1,16 @@
 package io.zipcoder.service.implementations;
 
 import io.zipcoder.domain.Account;
+import io.zipcoder.domain.Customer;
 import io.zipcoder.repository.AccountRepository;
+import io.zipcoder.repository.CustomerRepository;
 import io.zipcoder.service.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -20,10 +24,12 @@ import static org.springframework.http.HttpStatus.OK;
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepo;
+    private CustomerRepository customerRepo;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepo) {
+    public AccountServiceImpl(AccountRepository accountRepo, CustomerRepository customerRepo) {
         this.accountRepo = accountRepo;
+        this.customerRepo = customerRepo;
     }
 
     public ResponseEntity<Account> getAccountById(Long accountId) {
@@ -37,7 +43,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public ResponseEntity<Account> createAccount(Account account, Long customerId) {
-        return null;
+        try {
+            Customer customer = customerRepo.findById(customerId).orElseThrow(Exception::new);
+            account.setCustomer(customer);
+            Account returnedAccount = accountRepo.save(account);
+            return new ResponseEntity<>(returnedAccount, CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Account(), BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<Account> updateAccount(Account account, Long accountId) {

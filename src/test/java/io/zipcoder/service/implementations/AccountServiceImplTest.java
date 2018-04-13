@@ -3,6 +3,7 @@ package io.zipcoder.service.implementations;
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Customer;
 import io.zipcoder.repository.AccountRepository;
+import io.zipcoder.repository.CustomerRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,10 +16,12 @@ import java.util.Optional;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -34,6 +37,9 @@ public class AccountServiceImplTest {
 
     @Mock
     private AccountRepository accountRepo;
+
+    @Mock
+    private CustomerRepository customerRepo;
 
     private Account mockAccount;
 
@@ -75,7 +81,16 @@ public class AccountServiceImplTest {
 
     @Test
     public void createAccount() {
-        fail();
+        given(customerRepo.findById(anyLong()))
+                .willReturn(Optional.of(mockAccount.getCustomer()));
+        given(accountRepo.save(any(Account.class)))
+                .willReturn(mockAccount);
+
+        ResponseEntity<Account> expected = new ResponseEntity<>(mockAccount, CREATED);
+        ResponseEntity<Account> actual = accountService.createAccount(mockAccount, mockAccount.getCustomer().getId());
+
+        verify(accountRepo).save(any(Account.class));
+        assertEquals(expected, actual);
     }
 
     @Test
