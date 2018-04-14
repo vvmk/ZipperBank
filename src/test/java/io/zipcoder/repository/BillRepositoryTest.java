@@ -52,7 +52,7 @@ public class BillRepositoryTest {
     }
 
     @Test
-    public void findAllByAccountCustomer_Id() {
+    public void findAllByAccount_Customer_Id() {
         //given
         Customer testCustomer = new Customer();
         Long customerId = entityManager.persistAndGetId(testCustomer, Long.class);
