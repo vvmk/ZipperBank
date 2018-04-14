@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
@@ -47,5 +48,11 @@ public class DepositRepositoryTest {
 
     @Test
     public void getDepositById() {
+        Deposit expected = new Deposit();
+        Long depositId = entityManager.persistAndGetId(expected, Long.class);
+
+        Deposit actual = depositRepo.getDepositById(depositId);
+
+        assertEquals(expected, actual);
     }
 }
