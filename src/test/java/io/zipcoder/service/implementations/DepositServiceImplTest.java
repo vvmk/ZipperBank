@@ -2,10 +2,8 @@ package io.zipcoder.service.implementations;
 
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Customer;
-
 import io.zipcoder.domain.Deposit;
 import io.zipcoder.repository.AccountRepository;
-
 import io.zipcoder.repository.DepositRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,14 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -103,7 +99,7 @@ public class DepositServiceImplTest {
     }
 
     @Test
-    public void updateDepositTest(){
+    public void updateDepositTest() {
         given(depositRepository.getDepositById(anyLong())).willReturn(mockDeposit);
         given(depositRepository.save(any(Deposit.class))).willReturn(mockDeposit);
 
@@ -115,7 +111,7 @@ public class DepositServiceImplTest {
     }
 
     @Test
-    public void deleteDepositById(){
+    public void deleteDepositById() {
         ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
         ResponseEntity actual = depositService.deleteDepositById(mockDeposit.getId());
 
