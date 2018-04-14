@@ -1,7 +1,7 @@
 package io.zipcoder.repository;
 
 import io.zipcoder.domain.Account;
-import io.zipcoder.domain.Customer;
+import io.zipcoder.domain.Deposit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,42 +11,48 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * project: zcwbank
  * package: io.zipcoder.repository
  * author: https://github.com/vvmk
- * date: 4/13/18
+ * date: 4/14/18
  */
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
-public class AccountRepositoryTest {
+public class DepositRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private AccountRepository accountRepo;
+    private DepositRepository depositRepo;
 
     @Test
-    public void whenFindAllByCustomer_Id() {
-        // given
-        Customer mockCustomer = new Customer();
-        Long customerId = entityManager.persistAndGetId(mockCustomer, Long.class);
+    public void getDepositsByAccount_Id() {
+        Account testAccount = new Account();
+        Long accountId = entityManager.persistAndGetId(testAccount, Long.class);
 
-        Account account = new Account();
-        account.setCustomer(mockCustomer);
+        Deposit testDeposit = new Deposit();
+        testDeposit.setAccount(testAccount);
+        entityManager.persistAndFlush(testDeposit);
 
-        entityManager.persist(account);
-        entityManager.flush();
+        Iterable<Deposit> foundDeposits = depositRepo.getDepositsByAccount_Id(accountId);
 
-        // when
-        Iterable<Account> foundAccounts = accountRepo.findAllByCustomer_Id(customerId);
+        assertThat(foundDeposits).contains(testDeposit);
+    }
 
-        // then
-        assertThat(foundAccounts).contains(account);
+    @Test
+    public void getDepositById() {
+        Deposit expected = new Deposit();
+        Long depositId = entityManager.persistAndGetId(expected, Long.class);
+
+        Deposit actual = depositRepo.getDepositById(depositId);
+
+        assertEquals(expected, actual);
     }
 }

@@ -19,11 +19,11 @@ public class Customer {
     private String first_name;
     private String last_name;
 
-    @OneToOne
-    @JoinColumn(name = "customer_address_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private List<Account> accounts;
 

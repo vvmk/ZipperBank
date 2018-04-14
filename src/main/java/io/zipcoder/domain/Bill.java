@@ -1,9 +1,6 @@
 package io.zipcoder.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * project: zcwbank
@@ -26,6 +23,7 @@ public class Bill {
     private Double payment_amount;
 
     @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
     public Bill() {
