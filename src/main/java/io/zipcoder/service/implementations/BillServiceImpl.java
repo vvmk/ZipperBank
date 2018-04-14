@@ -46,7 +46,7 @@ public class BillServiceImpl implements BillService {
     }
 
     public ResponseEntity<Iterable<Bill>> getBillsByCustomerId(Long customerId) {
-        Iterable<Bill> bills = billRepo.findAllByAccountCustomer_Id(customerId);
+        Iterable<Bill> bills = billRepo.findAllByAccount_Customer_Id(customerId);
         return new ResponseEntity<>(bills, OK);
     }
 

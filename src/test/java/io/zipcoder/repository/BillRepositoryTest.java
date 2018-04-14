@@ -73,7 +73,7 @@ public class BillRepositoryTest {
         entityManager.flush();
 
         //when
-        Iterable<Bill> foundBills = billRepository.findAllByAccountCustomer_Id(customerId);
+        Iterable<Bill> foundBills = billRepository.findAllByAccount_Customer_Id(customerId);
 
         //then
         assertThat(foundBills).contains(testBill);
