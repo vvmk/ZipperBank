@@ -92,13 +92,13 @@ public class BillServiceImplTest {
     public void testGetBillsByCustomerId() {
         Iterable<Bill> bills = singletonList(mockBill);
         Long custId = mockAccount.getCustomer().getId();
-        given(billRepo.findAllByAccountCustomer_Id(anyLong()))
+        given(billRepo.findAllByAccount_Customer_Id(anyLong()))
                 .willReturn(bills);
 
         ResponseEntity<Iterable<Bill>> expected = new ResponseEntity<>(bills, OK);
         ResponseEntity<Iterable<Bill>> actual = billService.getBillsByCustomerId(custId);
 
-        verify(billRepo).findAllByAccountCustomer_Id(anyLong());
+        verify(billRepo).findAllByAccount_Customer_Id(anyLong());
         assertEquals(expected, actual);
     }
 
