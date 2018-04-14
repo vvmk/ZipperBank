@@ -1,5 +1,6 @@
 package io.zipcoder.repository;
 
+import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Deposit;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface DepositRepository extends CrudRepository<Deposit, Long> {
 
 
-    Iterable<Deposit> getDepositsByAccount_Id(Long payee_id);
+    Iterable<Deposit> getDepositsByAccount_Id(Long accountId);
 
     Deposit getDepositById(Long id);
 }

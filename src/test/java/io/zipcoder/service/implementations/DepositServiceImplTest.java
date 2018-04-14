@@ -1,9 +1,7 @@
 package io.zipcoder.service.implementations;
 
 
-import io.zipcoder.controller.DepositController;
 import io.zipcoder.domain.Account;
-import io.zipcoder.domain.Bill;
 import io.zipcoder.domain.Customer;
 
 import io.zipcoder.domain.Deposit;
@@ -16,16 +14,20 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
+import java.util.Optional;
+
 import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 /**
  * project: zcwbank
@@ -35,7 +37,6 @@ import static org.mockito.BDDMockito.given;
  */
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(DepositServiceImpl.class)//disables full auto config for having configs just for MVC components
 public class DepositServiceImplTest {
 
     @InjectMocks// injects the made mocks into the deposit service
@@ -62,20 +63,64 @@ public class DepositServiceImplTest {
 
         mockDeposit = new Deposit();
         mockDeposit.setId(369L);
-        //ockDeposit.setPayee_id(mockAccount.getId());
+        mockDeposit.setAccount(mockAccount);
     }
 
     @Test
     public void getAllDepositsByAccountIdTest() {
-
-//        given(depositService.getAllDepositsByAccountId(mockAccount.getId()))
-//                .willReturn();
-
         Iterable<Deposit> deposits = singletonList(mockDeposit);
-        given(depositService.getAllDepositsByAccountId(anyLong()))
-                .willReturn(new ResponseEntity<>(deposits, HttpStatus.OK));
+        given(depositRepository.getDepositsByAccount_Id(anyLong()))
+                .willReturn(deposits);
+        ResponseEntity<Iterable<Deposit>> expected = new ResponseEntity<>(deposits, HttpStatus.OK);
+        ResponseEntity<Iterable<Deposit>> actual = depositService.getAllDepositsByAccountId(mockAccount.getId());
 
+        verify(depositRepository).getDepositsByAccount_Id(anyLong());
+        assertEquals(expected, actual);
 
+    }
+
+    @Test
+    public void getDepositByIdTest() {
+        given(depositRepository.getDepositById(369L)).willReturn(mockDeposit);
+
+        ResponseEntity<Deposit> expected = new ResponseEntity<>(mockDeposit, HttpStatus.OK);
+        ResponseEntity<Deposit> actual = depositService.getDepositById(369L);
+
+        verify(depositRepository).getDepositById(369L);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void createDepositTest() {
+        given(accountRepository.findById(anyLong())).willReturn(Optional.of(mockAccount));
+        given(depositRepository.save(any(Deposit.class))).willReturn(mockDeposit);// any allows flexible stubbing and verification
+
+        ResponseEntity<Deposit> expected = new ResponseEntity<>(mockDeposit, HttpStatus.CREATED);
+        ResponseEntity<Deposit> actual = depositService.createDeposit(mockDeposit, mockAccount.getId());
+
+        verify(depositRepository).save(any(Deposit.class));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void updateDepositTest(){
+        given(depositRepository.getDepositById(anyLong())).willReturn(mockDeposit);
+        given(depositRepository.save(any(Deposit.class))).willReturn(mockDeposit);
+
+        ResponseEntity<Deposit> expected = new ResponseEntity<>(mockDeposit, HttpStatus.OK);
+        ResponseEntity<Deposit> actual = depositService.updateDeposit(mockDeposit, mockDeposit.getId());
+
+        verify(depositRepository).save(any(Deposit.class));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void deleteDepositById(){
+        ResponseEntity expected = new ResponseEntity(HttpStatus.OK);
+        ResponseEntity actual = depositService.deleteDepositById(mockDeposit.getId());
+
+        verify(depositRepository).deleteById(anyLong());
+        assertEquals(expected, actual);
     }
 
 
