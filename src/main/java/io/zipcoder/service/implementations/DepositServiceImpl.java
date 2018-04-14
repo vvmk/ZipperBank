@@ -1,6 +1,5 @@
 package io.zipcoder.service.implementations;
 
-import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Deposit;
 import io.zipcoder.repository.AccountRepository;
 import io.zipcoder.repository.DepositRepository;
@@ -29,9 +28,8 @@ public class DepositServiceImpl implements DepositService {
     }
 
     public ResponseEntity<Iterable<Deposit>> getAllDepositsByAccountId(Long accountId) {
-
-        Iterable<Deposit> allDeposits = depositRepo.getDepositsByAccount_Id(accountId);
         //TODO: Check if account exists
+        Iterable<Deposit> allDeposits = depositRepo.getDepositsByAccount_Id(accountId);
         return new ResponseEntity<>(allDeposits, HttpStatus.OK);
     }
 
@@ -43,9 +41,15 @@ public class DepositServiceImpl implements DepositService {
 
     public ResponseEntity<Deposit> createDeposit(Deposit deposit, Long accountId) {
         //TODO: Check if account exists
-        deposit.setAccount(new Account());
-        depositRepo.save(deposit);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            deposit.setAccount(accountRepo.findById(accountId).orElseThrow(Exception::new));
+            Deposit newDeposit = depositRepo.save(deposit);
+            return new ResponseEntity<>(newDeposit, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Deposit(), HttpStatus.NOT_FOUND);
+
+        }
+
     }
 
     public ResponseEntity<Deposit> updateDeposit(Deposit deposit, Long depositId) {
@@ -57,6 +61,6 @@ public class DepositServiceImpl implements DepositService {
 
     public ResponseEntity deleteDepositById(Long depositId) {
         depositRepo.deleteById(depositId);
-        return new ResponseEntity(HttpStatus.valueOf(204));
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
