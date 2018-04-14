@@ -54,23 +54,16 @@ public class BillRepositoryTest {
     @Test
     public void findAllByAccountCustomer_Id() {
         //given
-        String firstName = "Rex";
-
         Customer testCustomer = new Customer();
-        testCustomer.setFirst_name(firstName);
         Long customerId = entityManager.persistAndGetId(testCustomer, Long.class);
-        entityManager.flush();
 
         Account testAccount = new Account();
         testAccount.setCustomer(testCustomer);
-        Long accountId = entityManager.persistAndGetId(testAccount, Long.class);
-        entityManager.flush();
+        entityManager.persist(testAccount);
 
         Bill testBill = new Bill();
         testBill.setAccount(testAccount);
-        entityManager.persist(testBill);
-
-        entityManager.flush();
+        entityManager.persistAndFlush(testBill);
 
         //when
         Iterable<Bill> foundBills = billRepository.findAllByAccount_Customer_Id(customerId);
