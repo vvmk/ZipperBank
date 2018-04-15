@@ -1,8 +1,6 @@
 package io.zipcoder.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * project: zcwbank
@@ -20,8 +18,19 @@ public class Address {
     private String city;
     private String state;
     private String zip;
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Address() {
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Long getId() {

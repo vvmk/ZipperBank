@@ -27,9 +27,6 @@ public class Customer {
     @JoinColumn(name = "customer_id")
     private List<Account> accounts;
 
-    public Customer() {
-    }
-
     public List<Account> getAccounts() {
         return accounts;
     }

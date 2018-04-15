@@ -10,4 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  * date: 4/9/18
  */
 public interface AddressRepository extends CrudRepository<Address, Long> {
+    Address findByCustomer_Id(Long customerId);
 }
