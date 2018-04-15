@@ -28,6 +28,7 @@ public class Withdrawal {
     private String medium;
     private Double amount;
     private String description;
+
     public Withdrawal() {
     }
 

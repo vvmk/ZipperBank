@@ -4,7 +4,6 @@ import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Withdrawal;
 import io.zipcoder.repository.AccountRepository;
 import io.zipcoder.repository.WithdrawalRepository;
-import io.zipcoder.service.interfaces.WithdrawalService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,22 +11,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -67,7 +62,7 @@ public class WithdrawalServiceImplTest {
     }
 
     @Test
-     public void testGetAllWithdrawalByAccountId(){
+    public void testGetAllWithdrawalByAccountId() {
         // given
         List<Withdrawal> withdrawals = new ArrayList<>();
         withdrawals.add(mockWithdrawal);
@@ -86,7 +81,7 @@ public class WithdrawalServiceImplTest {
 
 
     @Test
-    public void testGetWithdrawalById(){
+    public void testGetWithdrawalById() {
         List<Withdrawal> withdrawals = new ArrayList<>();
         withdrawals.add(mockWithdrawal);
 
@@ -103,7 +98,7 @@ public class WithdrawalServiceImplTest {
     }
 
     @Test
-    public void testCreateWithdrawal(){
+    public void testCreateWithdrawal() {
 
         given(withdrawalRepoMock.save(any(Withdrawal.class)))
                 .willReturn(mockWithdrawal);

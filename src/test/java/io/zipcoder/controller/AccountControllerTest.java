@@ -3,27 +3,21 @@ package io.zipcoder.controller;
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Customer;
 import io.zipcoder.service.interfaces.AccountService;
-import org.apache.coyote.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
-
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -124,7 +118,7 @@ public class AccountControllerTest {
         ResponseEntity expected = new ResponseEntity(OK);
         given(accountService.deleteAccountById(anyLong()))
                 .willReturn(expected);
-        
+
         ResponseEntity actual = accountController.deleteAccountById(mockAccount.getId());
 
         verify(accountService).deleteAccountById(anyLong());
