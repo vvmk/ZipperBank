@@ -5,10 +5,12 @@ import io.zipcoder.domain.Bill;
 import io.zipcoder.service.interfaces.BillService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
@@ -25,6 +27,8 @@ import static org.springframework.http.HttpStatus.OK;
  * author: https://github.com/vvmk
  * date: 4/14/18
  */
+
+@RunWith(SpringRunner.class)
 public class BillControllerTest {
 
     @Mock
