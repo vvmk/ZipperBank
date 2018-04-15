@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -102,16 +105,35 @@ public class WithdrawalServiceImplTest {
     @Test
     public void testCreateWithdrawal(){
 
+        given(withdrawalRepoMock.save(any(Withdrawal.class)))
+                .willReturn(mockWithdrawal);
+
+        ResponseEntity<Withdrawal> expected = new ResponseEntity<>(mockWithdrawal, CREATED);
+        ResponseEntity<Withdrawal> actual = withdrawalServiceImpl.createWithdrawal(mockWithdrawal, mockAccount.getId());
+
+        verify(withdrawalRepoMock).save(any(Withdrawal.class));
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testUpdateWithdrawal(){
+    public void testUpdateWithdrawal() {
+        given(withdrawalRepoMock.save(any(Withdrawal.class)))
+                .willReturn(mockWithdrawal);
 
+        ResponseEntity<Withdrawal> expected = new ResponseEntity<>(mockWithdrawal, OK);
+        ResponseEntity<Withdrawal> actual = withdrawalServiceImpl.updateWithdrawal(mockWithdrawal, mockWithdrawal.getId());
+
+        verify(withdrawalRepoMock).save(any(Withdrawal.class));
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testDeleteWithdrawal(){
+    public void testDeleteWithdrawal() {
+        ResponseEntity expected = new ResponseEntity(OK);
+        ResponseEntity actual = withdrawalServiceImpl.deleteWithdrawalById(mockWithdrawal.getId());
 
+        verify(withdrawalRepoMock).deleteById(mockWithdrawal.getId());
+        assertEquals(expected, actual);
     }
 
 

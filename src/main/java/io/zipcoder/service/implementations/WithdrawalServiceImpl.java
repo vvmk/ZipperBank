@@ -40,14 +40,14 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
     public ResponseEntity<Withdrawal> createWithdrawal(Withdrawal withdrawal, Long accountId) {
         withdrawal = withdrawalRepo.save(withdrawal);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newPollUri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(withdrawal.getId())
-                .toUri();
-        responseHeaders.setLocation(newPollUri);
-        return new ResponseEntity<>(withdrawal, responseHeaders, HttpStatus.CREATED);
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newPollUri = ServletUriComponentsBuilder
+//                .fromCurrentRequest()
+//                .path("/accounts/{id}/withdrawal")
+//                .buildAndExpand(withdrawal.getId())
+//                .toUri();
+//        responseHeaders.setLocation(newPollUri);
+        return new ResponseEntity<>(withdrawal, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
