@@ -2,13 +2,14 @@ package io.zipcoder.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.zipcoder.domain.Account;
-import io.zipcoder.domain.Deposit;
+import io.zipcoder.domain.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,91 +26,100 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * project: zcwbank
  * package: io.zipcoder.controller
  * author: https://github.com/vvmk
- * date: 4/12/18
+ * date: 4/11/18
  */
 
 @SuppressWarnings("unchecked")
 @RunWith(SpringRunner.class)
-@WebMvcTest(DepositController.class)
-public class DepositControllerTest {
+@WebMvcTest(AccountController.class)
+public class AccountControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private DepositController depositController;
+    private AccountController accountController;
 
-    private Deposit mockDeposit;
     private Account mockAccount;
-
     private ObjectMapper om = new ObjectMapper();
 
     @Before
-    public void setUp() {
+    public void setup() {
+        Customer mockCustomer = new Customer();
+        mockCustomer.setId(1L);
+
         mockAccount = new Account();
         mockAccount.setId(1L);
-
-        mockDeposit = new Deposit();
-        mockDeposit.setId(1L);
-
-
+        mockAccount.setCustomer(mockCustomer);
     }
 
     @Test
-    public void getAllDepositsByAccountId() throws Exception {
-        Iterable<Deposit> deposits = singletonList(mockDeposit);
-        ResponseEntity<Iterable<Deposit>> response = new ResponseEntity<>(deposits, OK);
+    public void getAllAccounts() throws Exception {
+        Iterable<Account> accounts = singletonList(mockAccount);
+        ResponseEntity<Iterable<Account>> response = new ResponseEntity<>(accounts, OK);
 
-        given(depositController.getAllDepositsByAccountId(mockAccount.getId()))
+        given(accountController.getAllAccounts())
                 .willReturn(response);
 
-        mockMvc.perform(get("/accounts/1/deposits")
+        mockMvc.perform(get("/accounts")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void getDepositById() throws Exception {
-        ResponseEntity<Deposit> response = new ResponseEntity<>(mockDeposit, OK);
+    public void getAccountById() throws Exception {
+        ResponseEntity<Account> response = new ResponseEntity<>(mockAccount, OK);
 
-        given(depositController.getDepositById(mockDeposit.getId()))
+        given(accountController.getAccountById(mockAccount.getId()))
                 .willReturn(response);
 
-        mockMvc.perform(get("/deposits/1")
+        mockMvc.perform(get("/accounts/1")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void createDeposit() throws Exception {
-        given(depositController.createDeposit(mockDeposit, mockAccount.getId()))
+    public void getAccountsByCustomerId() throws Exception {
+        Iterable<Account> accounts = singletonList(mockAccount);
+        ResponseEntity<Iterable<Account>> response = new ResponseEntity<>(accounts, OK);
+
+        given(accountController.getAccountsByCustomerId(mockAccount.getCustomer().getId()))
+                .willReturn(response);
+
+        mockMvc.perform(get("/customers/1/accounts")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createAccount() throws Exception {
+        given(accountController.createAccount(mockAccount, mockAccount.getCustomer().getId()))
                 .willReturn(mock(ResponseEntity.class));
 
-        String body = om.writeValueAsString(mockDeposit);
+        String body = om.writeValueAsString(mockAccount);
         mockMvc.perform(
-                post("/accounts/1/deposits")
+                post("/customers/1/accounts")
                         .contentType(APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void updateDeposit() throws Exception {
-        given(depositController.updateDeposit(mockDeposit, mockDeposit.getId()))
+    public void updateAccount() throws Exception {
+        given(accountController.updateAccount(mockAccount, mockAccount.getId()))
                 .willReturn(mock(ResponseEntity.class));
 
-        String body = om.writeValueAsString(mockDeposit);
+        String body = om.writeValueAsString(mockAccount);
         mockMvc.perform(
-                put("/deposits/1")
-                        .contentType(APPLICATION_JSON)
+                put("/accounts/1")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteDepositById() throws Exception {
-        mockMvc.perform(delete("/deposits/1")
-                .contentType(APPLICATION_JSON))
+    public void deleteAccountById() throws Exception {
+        mockMvc.perform(delete("/accounts/1"))
                 .andExpect(status().isOk());
     }
 }

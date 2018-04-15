@@ -2,7 +2,7 @@ package io.zipcoder.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.zipcoder.domain.Account;
-import io.zipcoder.domain.Withdrawal;
+import io.zipcoder.domain.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,83 +30,93 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SuppressWarnings("unchecked")
 @RunWith(SpringRunner.class)
-@WebMvcTest(WithdrawalController.class)
-public class WithdrawalControllerTest {
+@WebMvcTest(CustomerController.class)
+public class CustomerControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private WithdrawalController withdrawalController;
+    private CustomerController customerController;
 
-    private Withdrawal mockWithdrawal;
     private Account mockAccount;
-
-    private String mockWithdrawalJson;
+    private Customer mockCustomer;
+    private ObjectMapper om = new ObjectMapper();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mockAccount = new Account();
         mockAccount.setId(1L);
 
-        mockWithdrawal = new Withdrawal();
-        mockWithdrawal.setId(1L);
-
-        mockWithdrawalJson = new ObjectMapper().writeValueAsString(mockWithdrawal);
+        mockCustomer = new Customer();
+        mockCustomer.setId(1L);
+        mockCustomer.setAccounts(singletonList(mockAccount));
     }
 
     @Test
-    public void getAllWithdrawalsByAccountId() throws Exception {
-        Iterable<Withdrawal> withdrawals = singletonList(mockWithdrawal);
-        ResponseEntity<Iterable<Withdrawal>> response = new ResponseEntity<>(withdrawals, OK);
+    public void getCustomerByAccountId() throws Exception {
+        ResponseEntity<Customer> response = new ResponseEntity<>(mockCustomer, OK);
 
-        given(withdrawalController.getAllWithdrawalsByAccountId(mockAccount.getId()))
+        given(customerController.getCustomerByAccountId(mockAccount.getId()))
                 .willReturn(response);
 
-        mockMvc.perform(get("/accounts/1/withdrawals")
+        mockMvc.perform(get("/accounts/1/customer")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void getWithdrawalById() throws Exception {
-        ResponseEntity<Withdrawal> response = new ResponseEntity<>(mockWithdrawal, OK);
+    public void getAllCustomers() throws Exception {
+        Iterable<Customer> customers = singletonList(mockCustomer);
+        ResponseEntity<Iterable<Customer>> response = new ResponseEntity<>(customers, OK);
 
-        given(withdrawalController.getWithdrawalById(mockWithdrawal.getId()))
+        given(customerController.getAllCustomers())
                 .willReturn(response);
 
-        mockMvc.perform(get("/withdrawals/1")
+        mockMvc.perform(get("/customers")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void createWithdrawal() throws Exception {
-        given(withdrawalController.createWithdrawal(mockWithdrawal, mockAccount.getId()))
+    public void getCustomerById() throws Exception {
+        given(customerController.getCustomerByAccountId(mockCustomer.getId()))
                 .willReturn(mock(ResponseEntity.class));
 
-        mockMvc.perform(
-                post("/accounts/1/withdrawal")
-                        .contentType(APPLICATION_JSON)
-                        .content(mockWithdrawalJson))
+        mockMvc.perform(get("/customers/1")
+                .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void updateWithdrawal() throws Exception {
-        given(withdrawalController.updateWithdrawal(mockWithdrawal, mockWithdrawal.getId()))
+    public void createCustomer() throws Exception {
+        given(customerController.createCustomer(mockCustomer))
                 .willReturn(mock(ResponseEntity.class));
 
+        String body = om.writeValueAsString(mockCustomer);
         mockMvc.perform(
-                put("/withdrawals/1")
+                post("/customers")
                         .contentType(APPLICATION_JSON)
-                        .content(mockWithdrawalJson))
+                        .content(body))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteWithdrawalById() throws Exception {
-        mockMvc.perform(delete("/withdrawals/1")
+    public void updateCustomer() throws Exception {
+        given(customerController.updateCustomer(mockCustomer, mockCustomer.getId()))
+                .willReturn(mock(ResponseEntity.class));
+
+        String body = om.writeValueAsString(mockCustomer);
+        mockMvc.perform(
+                put("/customers/1")
+                        .contentType(APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteCustomer() throws Exception {
+        mockMvc.perform(delete("/customers/1")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

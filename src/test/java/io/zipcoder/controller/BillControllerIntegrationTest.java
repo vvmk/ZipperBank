@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SuppressWarnings("unchecked")
 @RunWith(SpringRunner.class)
 @WebMvcTest(BillController.class)
-public class BillControllerTest {
+public class BillControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;

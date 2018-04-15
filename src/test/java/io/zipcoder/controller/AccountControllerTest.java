@@ -1,51 +1,55 @@
 package io.zipcoder.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.zipcoder.domain.Account;
 import io.zipcoder.domain.Customer;
+import io.zipcoder.service.interfaces.AccountService;
+import org.apache.coyote.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static java.util.Collections.singletonList;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * project: zcwbank
  * package: io.zipcoder.controller
  * author: https://github.com/vvmk
- * date: 4/11/18
+ * date: 4/14/18
  */
-
-@SuppressWarnings("unchecked")
 @RunWith(SpringRunner.class)
-@WebMvcTest(AccountController.class)
 public class AccountControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private AccountService accountService;
 
-    @MockBean
+    @InjectMocks
     private AccountController accountController;
 
     private Account mockAccount;
-    private ObjectMapper om = new ObjectMapper();
+    private Customer mockCustomer;
 
     @Before
-    public void setup() {
-        Customer mockCustomer = new Customer();
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
+        mockCustomer = new Customer();
         mockCustomer.setId(1L);
 
         mockAccount = new Account();
@@ -54,72 +58,76 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getAllAccounts() throws Exception {
+    public void getAllAccounts() {
         Iterable<Account> accounts = singletonList(mockAccount);
-        ResponseEntity<Iterable<Account>> response = new ResponseEntity<>(accounts, OK);
+        ResponseEntity<Iterable<Account>> expected = new ResponseEntity<>(accounts, OK);
+        given(accountService.getAllAccounts())
+                .willReturn(expected);
 
-        given(accountController.getAllAccounts())
-                .willReturn(response);
+        ResponseEntity<Iterable<Account>> actual = accountController.getAllAccounts();
 
-        mockMvc.perform(get("/accounts")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+        verify(accountService).getAllAccounts();
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void getAccountById() throws Exception {
-        ResponseEntity<Account> response = new ResponseEntity<>(mockAccount, OK);
+    public void getAccountById() {
+        ResponseEntity<Account> expected = new ResponseEntity<>(mockAccount, OK);
+        given(accountController.getAccountById(anyLong()))
+                .willReturn(expected);
 
-        given(accountController.getAccountById(mockAccount.getId()))
-                .willReturn(response);
+        ResponseEntity<Account> actual = accountController.getAccountById(mockAccount.getId());
 
-        mockMvc.perform(get("/accounts/1")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+        verify(accountService).getAccountById(anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void getAccountsByCustomerId() throws Exception {
+    public void getAccountsByCustomerId() {
         Iterable<Account> accounts = singletonList(mockAccount);
-        ResponseEntity<Iterable<Account>> response = new ResponseEntity<>(accounts, OK);
+        ResponseEntity<Iterable<Account>> expected = new ResponseEntity<>(accounts, OK);
+        given(accountService.getAccountsByCustomerId(anyLong()))
+                .willReturn(expected);
 
-        given(accountController.getAccountsByCustomerId(mockAccount.getCustomer().getId()))
-                .willReturn(response);
+        ResponseEntity<Iterable<Account>> actual = accountController.getAccountsByCustomerId(mockAccount.getCustomer().getId());
 
-        mockMvc.perform(get("/customers/1/accounts")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+        verify(accountService).getAccountsByCustomerId(anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void createAccount() throws Exception {
-        given(accountController.createAccount(mockAccount, mockAccount.getCustomer().getId()))
-                .willReturn(mock(ResponseEntity.class));
+    public void createAccount() {
+        ResponseEntity<Account> expected = new ResponseEntity<>(mockAccount, CREATED);
+        given(accountService.createAccount(any(Account.class), anyLong()))
+                .willReturn(expected);
 
-        String body = om.writeValueAsString(mockAccount);
-        mockMvc.perform(
-                post("/customers/1/accounts")
-                        .contentType(APPLICATION_JSON)
-                        .content(body))
-                .andExpect(status().isOk());
+        ResponseEntity<Account> actual = accountController.createAccount(mockAccount, mockAccount.getCustomer().getId());
+
+        verify(accountService).createAccount(any(Account.class), anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void updateAccount() throws Exception {
-        given(accountController.updateAccount(mockAccount, mockAccount.getId()))
-                .willReturn(mock(ResponseEntity.class));
+    public void updateAccount() {
+        ResponseEntity<Account> expected = new ResponseEntity<>(mockAccount, OK);
+        given(accountService.updateAccount(any(Account.class), anyLong()))
+                .willReturn(expected);
 
-        String body = om.writeValueAsString(mockAccount);
-        mockMvc.perform(
-                put("/accounts/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andExpect(status().isOk());
+        ResponseEntity<Account> actual = accountController.updateAccount(mockAccount, mockAccount.getId());
+
+        verify(accountService).updateAccount(any(Account.class), anyLong());
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void deleteAccountById() throws Exception {
-        mockMvc.perform(delete("/accounts/1"))
-                .andExpect(status().isOk());
+    public void deleteAccountById() {
+        ResponseEntity expected = new ResponseEntity(OK);
+        given(accountService.deleteAccountById(anyLong()))
+                .willReturn(expected);
+        
+        ResponseEntity actual = accountController.deleteAccountById(mockAccount.getId());
+
+        verify(accountService).deleteAccountById(anyLong());
+        assertEquals(expected, actual);
     }
 }
