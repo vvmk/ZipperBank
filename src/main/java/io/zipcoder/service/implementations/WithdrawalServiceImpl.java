@@ -47,15 +47,15 @@ public class WithdrawalServiceImpl implements WithdrawalService {
                 .buildAndExpand(withdrawal.getId())
                 .toUri();
         responseHeaders.setLocation(newPollUri);
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(withdrawal, responseHeaders, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Withdrawal> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
         Withdrawal w = withdrawalRepo.save(withdrawal);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(w, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> deleteWithdrawalById(Long withdrawalId) {
+    public ResponseEntity deleteWithdrawalById(Long withdrawalId) {
         withdrawalRepo.deleteById(withdrawalId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
